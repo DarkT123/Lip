@@ -1,0 +1,17 @@
+# Runtime — data collection
+google-genai>=0.3.0
+opencv-python>=4.9.0
+pynput>=1.7.6
+pyperclip>=1.8.2
+python-dotenv>=1.0.0
+
+# Preprocessing
+mediapipe>=0.10.14
+numpy>=1.26
+
+# Training / inference dependencies (install once you wire up avsr.py):
+#   torch>=2.2
+#   torchaudio>=2.2
+#   pytorch-lightning>=2.2
+#   sentencepiece>=0.2
+# Plus the Auto-AVSR or AV-HuBERT repo per src/avsr.py docstring.

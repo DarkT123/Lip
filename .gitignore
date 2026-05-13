@@ -1,0 +1,27 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+
+# Data & generated artifacts
+data/
+*.mp4
+*.wav
+*.npz
+
+# Model weights and third-party backbones
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+third_party/
