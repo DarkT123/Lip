@@ -75,10 +75,12 @@ def check_checkpoint() -> int:
     if not ckpt.exists():
         return fail(
             f"Checkpoint not found at {ckpt}",
-            f"download a fine-tuned model from "
-            f"https://github.com/ahaliassos/usr2 and save it to {ckpt}\n"
-            f"            (Base+ ~recommended for first run: "
-            f"https://drive.google.com/file/d/18vmJjdem5XPOA8bmizybIW5sLJuHMdRR/view)",
+            "open https://github.com/ahaliassos/usr2 → "
+            "Pretrained Models → Fine-tuned (full model) → High-resource. "
+            "Download the 'Base+ LRS3+Vox2' checkpoint (recommended for first run), "
+            f"then save / rename the .pth to:\n              {ckpt}\n"
+            "            The README's checkpoint table is the source of truth — "
+            "direct URLs may rotate.",
         )
     size = ckpt.stat().st_size
     if size == 0:

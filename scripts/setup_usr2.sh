@@ -80,16 +80,20 @@ else
 
 Next step — download a USR2 fine-tuned checkpoint manually.
 
-Open one of the following in your browser (Base+ recommended for first run):
-  Base+ (~smaller, fast):  https://drive.google.com/file/d/18vmJjdem5XPOA8bmizybIW5sLJuHMdRR/view
-  Huge  (~best accuracy):  https://drive.google.com/file/d/1LzFOTYu45zCLOHGVLQt7pMGjw6jmmo9Y/view
+  Source of truth: the checkpoint table in the USR2 GitHub README.
+  Direct download URLs rotate, so do NOT trust any hardcoded link below
+  if it 404s — go to the README and grab the current link.
 
-Save the downloaded .pth file to:
-  $CKPT_PATH
+  1. Open https://github.com/ahaliassos/usr2
+  2. Scroll to:  Pretrained Models → Fine-tuned (full model) → High-resource
+  3. Download:   Base+ LRS3+Vox2     (recommended for first run, ~hundreds of MB)
+       or:      Huge LRS2+LRS3+Vox2+AVS   (best accuracy, multi-GB)
+  4. Save / rename the downloaded .pth to:
+        $CKPT_PATH
+     (or set LIPSYNC_CHECKPOINT=/path/to/your.pth before running inference)
 
-(or set LIPSYNC_CHECKPOINT=/path/to/your.pth before running inference.)
-
-Then run a smoke test:
+Then verify and run:
+  python scripts/check_usr2.py
   python scripts/run_inference.py path/to/sample.mp4
 
 EOF

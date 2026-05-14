@@ -4,6 +4,8 @@ A personal **visual / audio-visual speech recognition (VSR / AVSR)** desktop app
 
 Inference uses **USR 2.0** (Haliassos et al., ICLR 2026) by default. Auto-AVSR and AV-HuBERT skeletons are present in `src/avsr.py` if you want to swap. Multimodal LLMs (Gemini, Grok, MiniMax) are **not** the recognition model — they only show up as optional post-process rescorers.
 
+> **Checkpoint links rotate.** This repo deliberately does not hardcode a direct download URL for the USR2 checkpoint. The official **`ahaliassos/usr2` GitHub README** is the source of truth — its `Pretrained Models → Fine-tuned (full model) → High-resource` table holds the current links. Whenever the link goes stale, refresh from there.
+
 ## Quick start
 
 ```bash
@@ -16,12 +18,20 @@ brew install ffmpeg                          # webcam capture + USR2 video decod
 # 2. Install USR 2.0 backend (clones repo + installs PyTorch + deps)
 bash scripts/setup_usr2.sh
 
-# 3. Download a checkpoint manually from Google Drive
-#    (Google Drive's UI gating makes wget unreliable, so this is a manual step.)
-#    Base+ ~recommended for first run; Huge for max accuracy:
-#      https://drive.google.com/file/d/18vmJjdem5XPOA8bmizybIW5sLJuHMdRR/view   (Base+)
-#      https://drive.google.com/file/d/1LzFOTYu45zCLOHGVLQt7pMGjw6jmmo9Y/view   (Huge)
-#    Save to checkpoints/usr2_base_plus.pth, or set LIPSYNC_CHECKPOINT to point elsewhere.
+# 3. Download a checkpoint manually from the USR2 GitHub README's checkpoint table.
+#
+#    The official table is the source of truth — treat any hardcoded checkpoint
+#    URL in this repo as potentially stale. Authors rotate Drive/HF links.
+#
+#    Steps:
+#      a. Open https://github.com/ahaliassos/usr2
+#      b. Scroll to:  Pretrained Models → Fine-tuned (full model) → High-resource
+#      c. Click the download link for:  Base+ LRS3+Vox2   (recommended first run)
+#         (or "Huge LRS2+LRS3+Vox2+AVS" if you want max accuracy and don't mind
+#          a multi-GB download)
+#      d. Save / rename the downloaded .pth to:
+#           checkpoints/usr2_base_plus.pth
+#         OR export LIPSYNC_CHECKPOINT=/path/to/your.pth to point elsewhere.
 
 # 4. Real inference on one video
 LIPSYNC_BACKEND=usr2 \

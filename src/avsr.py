@@ -102,15 +102,19 @@ class USR2Backend:
         if ckpt is None:
             raise NotInstalled(
                 "No checkpoint configured. Set LIPSYNC_CHECKPOINT=/path/to/your.pth "
-                "or place a checkpoint at checkpoints/usr2_base_plus.pth.\n"
-                "Download links: https://github.com/ahaliassos/usr2 (fine-tuned models)"
+                "or save a fine-tuned checkpoint at checkpoints/usr2_base_plus.pth.\n"
+                "Get one from https://github.com/ahaliassos/usr2 → Pretrained Models "
+                "→ Fine-tuned (full model) → High-resource → Base+ LRS3+Vox2."
             )
         if not ckpt.exists():
             raise NotInstalled(
                 f"Checkpoint not found at {ckpt}.\n"
-                f"Download a fine-tuned model from https://github.com/ahaliassos/usr2 "
-                f"(Base+ ~recommended for first run, Huge for max accuracy) and save it to:\n"
-                f"  {ckpt}"
+                "Download from https://github.com/ahaliassos/usr2 → Pretrained Models "
+                "→ Fine-tuned (full model) → High-resource → Base+ LRS3+Vox2 (recommended "
+                "first run; Huge LRS2+LRS3+Vox2+AVS for max accuracy). Save / rename the .pth to:\n"
+                f"  {ckpt}\n"
+                "The README's checkpoint table is the source of truth — any hardcoded "
+                "URL in this project may have rotated."
             )
         # Smoke-check the active venv has torch — saves a confusing demo.py traceback.
         try:
