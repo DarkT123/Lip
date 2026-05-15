@@ -132,8 +132,14 @@ class USR2Backend:
         repo = config.USR2_REPO_DIR
         ckpt = config.AVSR_CHECKPOINT_PATH
         assert ckpt is not None  # load() guarantees this
+        # Route through scripts/usr2_shim.py, which monkey-patches
+        # torchvision.io.read_video to use an ffmpeg subprocess decoder.
+        # Required because PyAV 17.0.1's swscaler fails on macOS arm64 for
+        # yuv420p+bt709 → rgb24 conversion, and older PyAV versions don't
+        # ship arm64 wheels for Python 3.13. See scripts/usr2_shim.py docstring.
+        shim = Path(__file__).resolve().parent.parent / "scripts" / "usr2_shim.py"
         cmd = [
-            sys.executable, "demo.py",
+            sys.executable, str(shim),
             f"video={video_path.resolve()}",
             f"model.pretrained_model_path={ckpt.resolve()}",
             f"modality={mode}",
@@ -144,7 +150,7 @@ class USR2Backend:
             cwd=repo,
             capture_output=True,
             text=True,
-            timeout=300,
+            timeout=900,  # CPU inference on Apple Silicon is slow; allow ~15min
         )
         if proc.returncode != 0:
             raise RuntimeError(

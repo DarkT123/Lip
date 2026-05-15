@@ -51,20 +51,30 @@ if [ ! -f "$USR2_DIR/demo.py" ]; then
 fi
 
 bold "[3/5] Installing PyTorch"
+# Pinned versions matter:
+#   - USR2's demo.py uses torchvision.io.read_video, which torchvision 0.22+
+#     removed. torchvision 0.21 / torch 2.6 / torchaudio 2.6 is the latest
+#     trio with the API intact on Python 3.13.
+TORCH_VERSION="2.6.0"
+TORCHVISION_VERSION="0.21.0"
+TORCHAUDIO_VERSION="2.6.0"
 PLATFORM="$(uname -s)-$(uname -m)"
 case "$PLATFORM" in
   Darwin-arm64|Darwin-x86_64)
     echo "  macOS detected — installing default PyTorch wheels (MPS-capable on arm64)"
-    python3 -m pip install --upgrade torch torchaudio torchvision
+    python3 -m pip install --upgrade \
+      torch=="$TORCH_VERSION" torchvision=="$TORCHVISION_VERSION" torchaudio=="$TORCHAUDIO_VERSION"
     ;;
   Linux-x86_64)
     echo "  Linux x86_64 detected — installing CUDA 12.1 wheels per USR2 README"
-    python3 -m pip install --upgrade torch torchaudio torchvision \
+    python3 -m pip install --upgrade \
+      torch=="$TORCH_VERSION" torchvision=="$TORCHVISION_VERSION" torchaudio=="$TORCHAUDIO_VERSION" \
       --index-url https://download.pytorch.org/whl/cu121
     ;;
   *)
     warn "Unknown platform $PLATFORM — falling back to default PyTorch wheels"
-    python3 -m pip install --upgrade torch torchaudio torchvision
+    python3 -m pip install --upgrade \
+      torch=="$TORCH_VERSION" torchvision=="$TORCHVISION_VERSION" torchaudio=="$TORCHAUDIO_VERSION"
     ;;
 esac
 
