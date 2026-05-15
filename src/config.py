@@ -27,6 +27,16 @@ AVSR_CHECKPOINT_PATH: Path | None = (
 # Modality: "v" (visual only), "a" (audio only), or "av" (audio-visual, default).
 AVSR_MODALITY: str = os.environ.get("LIPSYNC_MODALITY", "av")
 
+# USR2 backbone config name — MUST match the checkpoint's architecture.
+# Options (from third_party/usr2/conf/model/backbone/):
+#   resnet_transformer_base       (adim=512, ~small)
+#   resnet_transformer_baseplus   (adim=768, default — matches the Base+ checkpoints)
+#   resnet_transformer_large      (adim=1024)
+#   resnet_transformer_huge       (adim=1280, USR2's own demo.py default — for the Huge checkpoint)
+# Mismatching backbone vs checkpoint produces shape errors at load time
+# (e.g. "shape torch.Size([768]) from checkpoint vs torch.Size([1280]) in current model").
+USR2_BACKBONE: str = os.environ.get("LIPSYNC_USR2_BACKBONE", "resnet_transformer_baseplus")
+
 # Path to the cloned backend repo (for subprocess-based backends like USR2).
 USR2_REPO_DIR: Path = ROOT / "third_party" / "usr2"
 

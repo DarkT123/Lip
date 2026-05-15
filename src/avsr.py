@@ -144,6 +144,7 @@ class USR2Backend:
             f"model.pretrained_model_path={ckpt.resolve()}",
             f"modality={mode}",
             "detector=mediapipe",  # CUDA-free; RetinaFace requires GPU + ibug.
+            f"model/backbone={config.USR2_BACKBONE}",  # must match checkpoint dims
         ]
         proc = subprocess.run(
             cmd,
